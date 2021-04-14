@@ -145,17 +145,29 @@ systemctl restart apache2
 
 # ------------------------------------------------------------------------------ WP - CLI------------------------------------------------------------------------------ 
 
-# Nos movemos al directorio de Apache
-cd /var/www/html
+## Instalación de WP-CLI en el servidor LAMP
 
-# Descargamos el código fuente de WordPress con ruta absoluta.
-wp core download --path=/var/www/html
 # Descargamos y guardamos el contenido de wp-cli.phar
 curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 
-# Permisos de ejecución (X)
+# Le asignamos permisos de ejecución al archivo
 chmod +x wp-cli.phar
+
+# Movemos el archivo y cambiamos el nombre  a wp. A partir de aquí, la terminal debería ayudarnos usando 'wp'
+mv wp-cli.phar /usr/local/bin/wp
+
 
 # Eliminamos index.html
 rm -rf index.html
 
+# Descargamos el código fuente de Wordpress en Español y le damos permiso de root
+wp core download --path=/var/www/html --locale=es_ES --allow-root
+
+# Permisos necesarios sobre la carpeta de wordpress
+chown -R www-data:www-data /var/www/html
+
+# Creamos el archivo de configuración de Wordpress
+wp config create --dbname=$DB_NAME --dbuser=$DB_USER --dbpass=$DB_PASSWORD --allow-root
+
+# Instalamos Wordpress con la configuración. Recordatorio de actualizar la IP en la lista de variables.
+wp core install --url=$IP_PUBLICA --title="IAW Padilla" --admin_user=admin --admin_password=admin_password --admin_email=test@test.com --allow-root
