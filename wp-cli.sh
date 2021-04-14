@@ -110,7 +110,7 @@ sed -i "/WP_SITEURL/a define( 'WP_HOME', 'http://$IP_PUBLICA' );" /var/www/html/
 sed -i "s#/wp-blog-header.php#/wordpress/wp-blog-header.php#" /var/www/html/index.php
 
 # Copiamos el archivo htaccess incluido en nuestro repositorio git. No es necesario extraer de la carpeta. Hará de balanceador de carga en siguientes fases.
-cp $HTTPASSWD_DIR iaw-practica-08/htaccess /var/www/html/.htaccess
+cp $HTTPASSWD_DIR iaw-WP-CLI/htaccess /var/www/html/.htaccess
 
 # Configuración de las security keys. Estas claves añaden elementos aleatorios a la contraseña, lo cual ralentiza una entrada 'forzada'
 # Se emplean 4 claves. Los cuatro campos 'salt' tienen un valor por defecto otorgado por Wordpress, pero lo podemos cambiar.
@@ -166,7 +166,7 @@ wp core download --path=/var/www/html --locale=es_ES --allow-root
 # Permisos necesarios sobre la carpeta de wordpress
 chown -R www-data:www-data /var/www/html
 
-# Creamos el archivo de configuración de Wordpress
+# Creamos el archivo de configuración de Wordpress. Podemos revisarlo luego con el comando 'wp config get'
 wp config create --dbname=$DB_NAME --dbuser=$DB_USER --dbpass=$DB_PASSWORD --allow-root
 
 # Instalamos Wordpress con la configuración. Recordatorio de actualizar la IP en la lista de variables.
