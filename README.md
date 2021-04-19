@@ -8,6 +8,7 @@ Ciclo: CFGS Administración de Sistemas Informáticos en Red
 **Introducción**
 ------------
 Esta práctica implementa WP-CLI (Command Line Interface) para la gestión de sitios Wordpress.
+
 **Fases de la práctica**
 ------------
 
